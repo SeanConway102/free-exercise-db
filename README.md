@@ -9,33 +9,31 @@ I started building another fitness related app and was looking for free/open sou
 
 ### What do they look like?
 
-All exercises are stored as seperate `JSON` documents and conform to the following [JSON Schema](./schema.json) eg.
+General exercises are stored as single `JSON` documents with variations nested inside. They conform to the [general schema](./general_exercises/schema_general.json) eg.
 
 ```json
 {
-  "id": "Alternate_Incline_Dumbbell_Curl",
-  "name": "Alternate Incline Dumbbell Curl",
-  "force": "pull",
-  "level": "beginner",
-  "mechanic": "isolation",
-  "equipment": "dumbbell",
-  "primaryMuscles": [
-    "biceps"
-  ],
-  "secondaryMuscles": [
-    "forearms"
-  ],
-  "instructions": [
-    "Sit down on an incline bench with a dumbbell in each hand being held at arms length. Tip: Keep the elbows close to the torso.This will be your starting position.",
-  ],
-  "category": "strength",
-  "images": [
-    "Alternate_Incline_Dumbbell_Curl/0.jpg",
-    "Alternate_Incline_Dumbbell_Curl/1.jpg"
+  "id": "Bench_Press",
+  "name": "Bench Press",
+  "variations": [
+    {
+      "id": "Bench_Press_-_Powerlifting",
+      "name": "Bench Press - Powerlifting",
+      "equipment": "barbell",
+      "category": "powerlifting",
+      "images": ["Bench_Press_-_Powerlifting/0.jpg", "Bench_Press_-_Powerlifting/1.jpg"]
+    },
+    {
+      "id": "Dumbbell_Bench_Press",
+      "name": "Dumbbell Bench Press",
+      "equipment": "dumbbell",
+      "category": "strength",
+      "images": ["Dumbbell_Bench_Press/0.jpg", "Dumbbell_Bench_Press/1.jpg"]
+    }
   ]
 }
 ```
-See [Alternate_Incline_Dumbbell_Curl.json](./exercises/Alternate_Incline_Dumbbell_Curl.json)
+See [Bench_Press.json](./general_exercises/Bench_Press.json)
 
 To further explore the data, you can use [lite.datasette.io](https://lite.datasette.io/?json=https://github.com/yuhonas/free-exercise-db/blob/main/dist/exercises.json#/data/exercises?_facet_array=primaryMuscles&_facet=force&_facet=level&_facet=equipment)
 
@@ -51,7 +49,9 @@ You can leverage github's hosting and access the single or combined [exercises.j
 There are a number of helpful [Makefile](./Makefile) tasks that you can utilize
 
 #### Linting
-To lint all the `JSON` files against the [schema.json](./schema.json) use
+To lint all the variation files against the original [schema.json](./schema.json)
+or validate the new general exercise format with
+[schema_general.json](./general_exercises/schema_general.json) use
 
 ```
 make lint
