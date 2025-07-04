@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string"},
+    "name": {"type": "string"},
+    "variations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "force": {"type": ["string", "null"]},
+          "level": {"type": "string"},
+          "mechanic": {"type": ["string", "null"]},
+          "equipment": {"type": ["string", "null"]},
+          "primaryMuscles": {"type": "array", "items": {"type": "string"}},
+          "secondaryMuscles": {"type": "array", "items": {"type": "string"}},
+          "instructions": {"type": "array", "items": {"type": "string"}},
+          "category": {"type": "string"},
+          "images": {"type": "array", "items": {"type": "string"}}
+        },
+        "required": ["id", "name", "level", "mechanic", "equipment", "primaryMuscles", "secondaryMuscles", "instructions", "category", "images"]
+      }
+    }
+  },
+  "required": ["id", "name", "variations"]
+}
