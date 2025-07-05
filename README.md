@@ -35,6 +35,11 @@ General exercises are stored as single `JSON` documents with variations nested i
 ```
 See [Bench_Press.json](./general_exercises/Bench_Press.json)
 
+Generated variation files live in the `exercises` folder and the combined array
+is written to `dist/exercises.json`. Add new variations by editing the
+appropriate file in `general_exercises` and then run `make build-general` to
+regenerate the outputs.
+
 To further explore the data, you can use [lite.datasette.io](https://lite.datasette.io/?json=https://github.com/yuhonas/free-exercise-db/blob/main/dist/exercises.json#/data/exercises?_facet_array=primaryMuscles&_facet=force&_facet=level&_facet=equipment)
 
 ### How do I use them?
@@ -55,6 +60,7 @@ or validate the new general exercise format with
 
 ```
 make lint
+make lint-general
 ```
 
 #### Combining into a single JSON file
@@ -63,7 +69,20 @@ If you make changes to any of the exercises or add new ones, to recombine all si
 ```sh
 make dist/exercises.json
 ```
+To regenerate the variation files from the definitions in `general_exercises` run
+
+```sh
+make build-general
+```
 _Note: requires [jq](https://stedolan.github.io/jq/)_
+
+Example sequence after editing a general exercise:
+
+```sh
+make lint-general
+make build-general
+make dist/exercises.json
+```
 
 #### Importing into PostgreSQL
 To combine all `JSON` files into [Newline Delimeted JSON](http://ndjson.org/) suitable for import into PostgreSQL use the following make task

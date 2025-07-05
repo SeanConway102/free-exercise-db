@@ -1,15 +1,25 @@
 .PHONY: lint check_dupes install
 
 sources :=$(wildcard ./exercises/**.json)
+general_sources :=$(wildcard ./general_exercises/*.json)
 
 lint:
-		check-jsonschema --schemafile ./schema.json $(sources)
+	check-jsonschema --schemafile ./schema.json $(sources)
+
+lint-general:
+	check-jsonschema --schemafile ./general_exercises/schema_general.json $(general_sources)
 check_dupes:
 		# check for duplicate id's, if there's ID's listed here
 		# we've got duplicate id's that need to be resolved
 		jq -s ".[]" $(sources) | jq '.id' | sort | uniq -d
 install:
-		pip install check-jsonschema
+	pip install check-jsonschema
+
+dist/general_exercises.json: $(general_sources)
+		# requires jq
+		jq -s '.' $^ > $@
+build-general: dist/general_exercises.json
+		node scripts/build_exercises.js
 dist/exercises.json: $(sources)
 		# requires jq
 		# brew install jq (for macos)
