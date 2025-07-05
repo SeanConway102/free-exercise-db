@@ -33,6 +33,17 @@ jobs:
           mv dist/exercises{,.original}.json
           make dist/exercises.json
           diff -q dist/exercises{,.original}.json
+
+  lint-general:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install linting dependencies
+        run: make install
+      - name: Lint general JSON to ensure it conforms with schema
+        run: make lint-general
   test:
     runs-on: ubuntu-22.04
     steps:
@@ -50,7 +61,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: [lint, test]
+    needs: [lint-general, test]
     # Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
     permissions:
       contents: read
