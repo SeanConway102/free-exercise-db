@@ -50,12 +50,29 @@ There are a number of helpful [Makefile](./Makefile) tasks that you can utilize
 
 #### Linting
 To lint all the variation files against the original [schema.json](./schema.json)
-or validate the new general exercise format with
-[schema_general.json](./general_exercises/schema_general.json) use
+run
 
-```
+```sh
 make lint
 ```
+
+To validate the consolidated exercise files in
+`general_exercises/` run
+
+```sh
+make lint-general
+```
+
+This ensures they conform to
+[schema_general.json](./general_exercises/schema_general.json).
+
+#### Generating consolidated exercises
+To build a single file for each exercise with its variations run
+
+```sh
+make general_exercises
+```
+The resulting files will be written to the `general_exercises/` directory.
 
 #### Combining into a single JSON file
 If you make changes to any of the exercises or add new ones, to recombine all single `JSON` files into a single `JSON` containing an array of objects using the following make task
