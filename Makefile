@@ -1,9 +1,13 @@
-.PHONY: lint check_dupes install
+.PHONY: lint lint-general check_dupes install
 
 sources :=$(wildcard ./exercises/**.json)
+general_sources :=$(filter-out ./general_exercises/schema_general.json,$(wildcard ./general_exercises/*.json))
 
 lint:
-		check-jsonschema --schemafile ./schema.json $(sources)
+	check-jsonschema --schemafile ./schema.json $(sources)
+
+lint-general:
+	check-jsonschema --schemafile ./general_exercises/schema_general.json $(general_sources)
 check_dupes:
 		# check for duplicate id's, if there's ID's listed here
 		# we've got duplicate id's that need to be resolved
